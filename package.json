@@ -1,0 +1,26 @@
+{
+  "name": "walletnode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "wallet.js",
+  "scripts": {
+    "start": "nodemon wallet.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "got": "^11.8.2",
+    "js-sha256": "^0.9.0",
+    "node-forge": "^0.10.0",
+    "nodemon": "^2.0.7",
+    "pem-file": "^1.0.1",
+    "qrcode": "^1.4.4",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}

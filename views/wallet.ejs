@@ -1,0 +1,146 @@
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>crypto wallet</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style>
+    html{
+      background-color:#343a40;
+    }
+  </style>
+</head>
+
+<nav class="navbar sticky-top navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="#">
+      <img src="/logo.png" width="35" height="35" alt="">
+
+    </a>
+  </a>
+  <h4 style = "color:C0C0C0">Crypto Wallet</h4>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div class="bg-dark text-dark text-center">
+
+<div class="card-deck">
+  <div class="card text-white bg-dark border-0">
+    <center><img src="publicKey.png" width="300" height="300" alt=""></center>
+    <div class="card-body">
+      <p>
+        <a class="btn btn-secondary" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapseMeme">
+          Show public key
+        </a>
+      </p>
+      <div class="collapse" id="collapse">
+        <div class="card text-white bg-dark border-0">
+          <p class="card-text"><small class="text-muted"><%= data[1]%></small></p>
+          <form action="/keygen" method="POST">
+             <button type="submit" class="btn btn-success">Generate New Public Key</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card text-white bg-dark border-0">
+    <center><img src="/logo.png" width="100" height="100" alt=""></center>
+    <div class="card-body">
+      <h1 class="card-title"><%= data[2]%> <small>HC</small></h1>
+      <div class="button-box col-lg-12">
+
+
+      <button type="submit" class="btn-lg btn-success mr-1" data-toggle= "modal" data-target ="#myModal">Send</button>
+
+        <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content bg-dark">
+              <div class="modal-header">
+                <h4 class="modal-title" style = "color:C0C0C0">Transfer funds</h4>
+                <button type="button" class="close" style = "color:C0C0C0" data-dismiss="modal"><span aria-hidden="false">&times;</span></button>
+              </div>
+              <div class="modal-body">
+                <form action="/addTransaction" method="POST">
+                  <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Reciever's wallet address" id="exampleInputPassword1" name="reciever">
+                  </div>
+                  <div class="form-group">
+                  <input type="text" class="form-control" placeholder= "Amount" name="amount">
+                  </div>
+                  <button type="submit" class="btn btn-success">Send</button>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+      <div class="btn-group" role="group" aria-label="Basic example">
+      <form action="/urls" method="POST">
+         <button type="submit" class="btn btn-secondary mr-1">Update server list</button>
+      </form>
+      <form action="/updateTransaction" method="POST">
+         <button type="submit" class="btn btn-secondary mr-1">Update transactions</button>
+      </form>
+      </div>
+      </div>
+      <% var length = data[3].length - 1; var num = 600%>
+      <% const start = new Date(data[3][length].date); const end = new Date(); var timeDiff = Math.abs(end.getTime() - start.getTime()); var mins = Math.ceil(timeDiff / 1000) / 60;%>
+      <p class="card-text"><small class="text-muted">Last transaction <%= mins.toPrecision(6) %> minute ago</small></p>
+
+      <div id="accordion">
+        <% let x = 1%>
+        <% data[3].forEach(transaction => { %>
+
+        <div class="card text-white bg-dark border-0">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapse<%= x%>">
+              <p class="text-white"><%=transaction.date%></p>
+            </a>
+          </div>
+          <div id="collapse<%= x%>" class="collapse" data-parent="#accordion">
+            <div class="card-body">
+                <p class= "text-white">Sender : <small class="text-muted"><%=transaction.sender %></small></p>
+                <p class= "text-white">Reciever : <small class="text-muted"><%=transaction.reciever %></small></p>
+                <p class= "text-white">Amount : <small class="text-muted"><%=transaction.amount %></small></p>
+                <p class= "text-white">Signature : <small class="text-muted"><%=transaction.sig %></small></p>
+              </div>
+            </div>
+        </div>
+        <% x++ %>
+        <% }); %>
+      </div>
+
+    </div>
+  </div>
+  <div class="card text-white bg-dark border-0">
+    <center><img src="harshpatel.png" width="300" height="300" alt=""></center>
+    <div class="card-body">
+      <p>
+        <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+          Show private key
+        </a>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card text-white bg-dark border-0">
+          <p class="card-text"><small class="text-muted"><%= data[0]%></small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
